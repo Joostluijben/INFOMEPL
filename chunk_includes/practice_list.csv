@@ -1,0 +1,7 @@
+group,condition,prime,target,primetype
+1,related-TL-internal,neevr,ALWAYS,related
+1,related-TL-final,nemer,ALWAYS,related
+2,related-TL-internal,friut,APPLE,related
+2,related-TL-final,freit,APPLE,related
+3,related-TL-internal,macrh,APRIL,related
+3,related-TL-final,manch,APRIL,related
