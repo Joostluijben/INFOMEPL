@@ -1,8 +1,8 @@
 group,condition,prime,target,primetype
 1,related-TL-internal,neevr,ALWAYS,related
-1,related-TL-final,nemer,ALWAYS,related
-1,unrelated-TL-internal,nevre,ALWAYS,unrelated
-1,unrelated-TL-final,nevem,ALWAYS,unrelated
+2,related-TL-final,nemer,ALWAYS,related
+3,unrelated-TL-internal,nevre,ALWAYS,unrelated
+4,unrelated-TL-final,nevem,ALWAYS,unrelated
 2,related-TL-internal,friut,APPLE,related
 2,related-TL-final,freit,APPLE,related
 2,unrelated-TL-internal,fruti,APPLE,unrelated

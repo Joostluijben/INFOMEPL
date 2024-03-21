@@ -1,6 +1,6 @@
 PennController.ResetPrefix(null);
 
-Sequence("instructions", "practice", randomize("trial"), SendResults(), "final");
+Sequence("instructions", "practice", "testComplete", randomize("trial"), SendResults(), "final");
 
 // Instructions trial
 newTrial("instructions",
@@ -15,12 +15,13 @@ newTrial("instructions",
         .wait()
 );
 
+// Practice trials
 Template("practice_list.csv", row => 
     newTrial("practice",
         newText("forwardMask", "######")
             .print()
             .settings.css("font-size", "2em"),
-        newTimer("forwardMaskTimer", 5000)
+        newTimer("forwardMaskTimer", 500)
             .start()
             .wait(),
         getText("forwardMask").remove(),
@@ -44,28 +45,44 @@ Template("practice_list.csv", row =>
         newText("target", row.target.toUpperCase())
             .print()
             .settings.css("font-size", "2em"),
-        
+
         newKey("response", "FJ")
             .log("all")
             .wait(),
 
         getText("target").remove()
     )
-    .log("group", row.group)
+    .log("group", row.itemGroup)
     .log("condition", row.condition)
     .log("prime", row.prime)
     .log("target", row.target)
     .log("primetype", row.primetype)
 );
 
+// Intermediate screen after completing practice trials
+newTrial("testComplete",
+    newText("testCompleteText", "You have completed the practice trials. Now you will begin the actual test cases.")
+        .print()
+        .center()
+        .css("font-size", "1em"),
+    newText("testCompleInstruction", "Press the space bar to begin a practice session."),
+    newKey("start", " ")
+        .wait()
+);
 
-// Experimental trials
-Template("list.csv", row => 
+// Function to select a list based on a random assignment
+const selectList = () => {
+    const listNumber = Math.ceil(Math.random() * 4); // Randomly select a number between 1 and 4
+    return 'newlist' + listNumber + '.csv'; // Return the filename of the list
+};
+
+// Load the randomly selected list for this participant
+Template(selectList(), row => 
     newTrial("trial",
         newText("forwardMask", "######")
             .print()
             .settings.css("font-size", "2em"),
-        newTimer("forwardMaskTimer", 5000)
+        newTimer("forwardMaskTimer", 500)
             .start()
             .wait(),
         getText("forwardMask").remove(),
@@ -89,19 +106,20 @@ Template("list.csv", row =>
         newText("target", row.target.toUpperCase())
             .print()
             .settings.css("font-size", "2em"),
-        
+
         newKey("response", "FJ")
-            .log("all") // Log all properties, including the pressed key and response time
+            .log("all")
             .wait(),
 
         getText("target").remove()
     )
-    .log("Group", row.group)
-    .log("Condition", row.condition)
-    .log("Prime", row.prime)
-    .log("Target", row.target)
-    // The 'Response' and 'RT' are logged as part of the newKey command
+    .log('group', row.itemGroup)
+    .log("condition", row.condition)
+    .log("prime", row.prime)
+    .log("target", row.target)
+    .log("primetype", row.primetype)
 );
+
 
 // Send results
 SendResults("send");
